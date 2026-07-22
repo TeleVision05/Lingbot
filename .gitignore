@@ -1,0 +1,33 @@
+# Large local media / derived data (keep out of git)
+*.mp4
+*.MP4
+*_frames/
+data/*.mp4
+data/*.MP4
+
+# Model weights (downloaded by scripts/download_model.sh)
+**/checkpoints/
+!**/checkpoints/.gitkeep
+
+# Python / env
+**/.venv/
+**/venv/
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.mypy_cache/
+**/*.egg-info/
+**/dist/
+**/build/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Viewer / render outputs
+**/outputs/
+**/*_sky_masks/
+**/screenshot.png
+**/*.glb

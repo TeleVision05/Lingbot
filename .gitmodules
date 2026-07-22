@@ -1,0 +1,4 @@
+[submodule "lingbot-map"]
+	path = lingbot-map
+	url = https://github.com/TeleVision05/lingbot-map.git
+	branch = mac-cpu-compat
