@@ -14,20 +14,29 @@
 #   FIRST_K=                 (optional limit)
 set -euo pipefail
 
+case "${1:-}" in
+  -h|--help) sed -n '2,/^set -euo/p' "$0" | sed '$d' | sed 's/^# \{0,1\}//'; exit 0 ;;
+esac
+
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 MAP="$ROOT/lingbot-map"
 CKPT="$MAP/checkpoints/lingbot-map-long.pt"
 PORT="${PORT:-8080}"
 FPS="${FPS:-10}"
 
+if [ ! -f "$MAP/.venv/bin/activate" ]; then
+  echo "lingbot-map venv not found at $MAP/.venv. Run: bash scripts/setup.sh" >&2
+  exit 1
+fi
+if [ ! -f "$CKPT" ]; then
+  echo "Model weights not found at $CKPT." >&2
+  echo "Run: bash scripts/download_model.sh  (or bash scripts/setup.sh)" >&2
+  exit 1
+fi
+
 cd "$MAP"
 # shellcheck disable=SC1091
 source .venv/bin/activate
-
-if [ ! -f "$CKPT" ]; then
-  echo "Missing checkpoint. Run: bash scripts/setup.sh"
-  exit 1
-fi
 
 INPUT="${1:-}"
 if [ -z "$INPUT" ]; then

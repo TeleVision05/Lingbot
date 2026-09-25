@@ -62,6 +62,28 @@ FPS=5 bash scripts/run_lab.sh data/full_lab.mp4
 FIRST_K=32 bash scripts/run_lab.sh data/full_lab.mp4
 ```
 
+## Export a GLB / PLY and render an orbit video (headless)
+
+```bash
+# Full-sequence windowed reconstruction → outputs/full_lab.{glb,ply} + predictions .npz
+bash scripts/export_full_lab_glb.sh data/full_lab.mp4
+
+# Software orbit render of the point cloud → outputs/full_lab_orbit.mp4 (needs ffmpeg)
+lingbot-map/.venv/bin/python scripts/render_lab_orbit.py
+```
+
+Every script supports `--help`, and exits with a clear message if the venv,
+the model weights, or the input is missing.
+
+## Test
+
+Unit tests cover the pure-python helpers and the scripts' guard rails. They need
+only numpy + Pillow (no torch, weights, or video):
+
+```bash
+lingbot-map/.venv/bin/python -m unittest discover -s tests -v
+```
+
 ## Cloud GPU (Colab / Kaggle / VM)
 
 ```bash
@@ -82,10 +104,14 @@ On CUDA hosts, FlashInfer is installed when possible; otherwise the runner adds 
 ```text
 Lingbot/
   data/                 # put full_lab.mp4 here (gitignored)
+  outputs/              # GLB / PLY / NPZ / MP4 results (gitignored)
   scripts/
-    setup.sh
-    download_model.sh
-    run_lab.sh
+    setup.sh              # venv + torch + lingbot-map + weights
+    download_model.sh     # weights only (~4.3 GB)
+    run_lab.sh            # interactive viser viewer
+    export_full_lab_glb.* # headless reconstruction → GLB/PLY
+    render_lab_orbit.py   # point cloud → orbit MP4
+  tests/                # unittest smoke tests
   lingbot-map/          # git submodule (TeleVision05/lingbot-map@mac-cpu-compat)
 ```
 

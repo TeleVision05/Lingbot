@@ -31,3 +31,15 @@ data/*.MP4
 **/*_sky_masks/
 **/screenshot.png
 **/*.glb
+
+# Weights / reconstruction artifacts anywhere
+*.pt
+*.pth
+*.safetensors
+*.npz
+*.ply
+*.log
+
+# Secrets
+.env
+.env.*

@@ -2,6 +2,10 @@
 # Download lingbot-map-long.pt into lingbot-map/checkpoints/
 set -euo pipefail
 
+case "${1:-}" in
+  -h|--help) sed -n '2,/^set -euo/p' "$0" | sed '$d' | sed 's/^# \{0,1\}//'; exit 0 ;;
+esac
+
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DIR="$ROOT/lingbot-map/checkpoints"
 mkdir -p "$DIR"
